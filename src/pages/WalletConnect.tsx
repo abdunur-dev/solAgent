@@ -13,16 +13,26 @@ import {
 } from "lucide-react";
 
 const WalletConnect: React.FC = () => {
-  const { wallets, select, connecting, connected, publicKey, disconnect } =
+  const { wallets, select, wallet, connect, connecting, connected, publicKey, disconnect } =
     useWallet();
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
   const [connectingWallet, setConnectingWallet] = useState<string | null>(null);
 
+  // Auto-connect when wallet is selected
+  useEffect(() => {
+    if (wallet && !connected && !connecting) {
+      connect().catch((err) => {
+        console.error("Wallet Connection Error:", err);
+        setError(err instanceof Error ? err.message : "Connection failed");
+      });
+    }
+  }, [wallet, connected, connecting, connect]);
+
   // Redirect if already connected
   useEffect(() => {
     if (connected && publicKey) {
-      const timer = setTimeout(() => navigate("/agent"), 600);
+      const timer = setTimeout(() => navigate("/agent"), 800);
       return () => clearTimeout(timer);
     }
   }, [connected, publicKey, navigate]);
