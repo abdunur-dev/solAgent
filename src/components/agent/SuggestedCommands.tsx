@@ -8,6 +8,7 @@ import {
   Landmark,
   ImageIcon,
   Zap,
+  QrCode,
 } from "lucide-react";
 
 interface SuggestedCommandsProps {
