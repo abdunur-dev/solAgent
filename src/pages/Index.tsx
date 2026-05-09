@@ -1,6 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Index: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleLaunch = () => {
+    navigate('/app');
+  };
+
   return (
     <div className="bg-[#0d0d0d] min-h-screen text-white font-body selection:bg-solana-cyan/30">
       
@@ -21,7 +28,7 @@ const Index: React.FC = () => {
             <a href="#features" className="nav-link">Features</a>
             <a href="#how-it-works" className="nav-link">How it Works</a>
             <a href="#faq" className="nav-link">FAQ</a>
-            <button className="btn-solana">Launch App</button>
+            <button onClick={handleLaunch} className="btn-solana">Launch App</button>
           </div>
         </nav>
 
@@ -39,8 +46,10 @@ const Index: React.FC = () => {
               Say It. Get It Done. Connect your wallet and let AI handle swaps, transfers, staking and more — all in plain English.
             </p>
             <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
-              <button className="btn-solana text-sm px-8 py-4">Launch App</button>
-              <button className="btn-ghost text-sm px-8 py-4">How it Works →</button>
+              <button onClick={handleLaunch} className="btn-solana text-sm px-8 py-4">Launch App</button>
+              <a href="#how-it-works">
+                <button className="btn-ghost text-sm px-8 py-4">How it Works →</button>
+              </a>
             </div>
             
             {/* Stats */}
@@ -312,7 +321,7 @@ const Index: React.FC = () => {
         <div className="max-w-[1000px] mx-auto bg-gradient-to-r from-solana-purple/20 to-solana-cyan/20 rounded-[32px] p-12 lg:p-20 text-center relative z-10 border border-white/10 backdrop-blur-xl">
           <h2 className="font-display font-bold text-4xl lg:text-6xl mb-8">Ready to Talk to Solana?</h2>
           <p className="text-white/60 text-lg lg:text-xl mb-12 max-w-[600px] mx-auto">Connect your wallet and start executing on-chain in seconds. No learning curve, no complex UIs.</p>
-          <button className="btn-solana px-12 py-5 text-base">Launch App</button>
+          <button onClick={handleLaunch} className="btn-solana px-12 py-5 text-base">Launch App</button>
           
           <div className="flex flex-wrap justify-center gap-8 mt-16 pt-8 border-t border-white/10">
             {['Non-custodial', 'Open source', 'Built on Solana'].map((badge, i) => (
@@ -344,7 +353,7 @@ const Index: React.FC = () => {
               <div>
                 <h5 className="font-bold text-xs uppercase tracking-widest mb-6 text-solana-cyan">Platform</h5>
                 <ul className="space-y-4 text-sm text-white/40">
-                  <li className="hover:text-white cursor-pointer transition-colors">Launch App</li>
+                  <li onClick={handleLaunch} className="hover:text-white cursor-pointer transition-colors">Launch App</li>
                   <li className="hover:text-white cursor-pointer transition-colors">How it Works</li>
                   <li className="hover:text-white cursor-pointer transition-colors">API Docs</li>
                 </ul>
