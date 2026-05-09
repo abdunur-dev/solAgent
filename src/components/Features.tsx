@@ -51,7 +51,7 @@ const features = [
     icon: Wallet,
     title: "Asset Management",
     description:
-      "Check balances, request Devnet airdrops, and view your NFT collection in one place.",
+      "Check balances, view your transaction history, and manage your NFT collection in one place.",
     color: "secondary" as const,
   },
 ];

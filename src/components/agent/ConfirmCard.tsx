@@ -26,8 +26,6 @@ const ConfirmCard: React.FC<ConfirmCardProps> = ({
         return "Confirm Swap";
       case "stake":
         return "Confirm Staking";
-      case "airdrop":
-        return "Confirm Airdrop";
       case "predict":
         return "Confirm Prediction";
       default:
@@ -59,12 +57,6 @@ const ConfirmCard: React.FC<ConfirmCardProps> = ({
           { label: "Amount", value: `${params.amount ?? 0} SOL` },
           { label: "Est. APY", value: "~7.2%" },
           { label: "Warmup", value: "~2 days" },
-        ];
-      case "airdrop":
-        return [
-          { label: "Network", value: "Devnet" },
-          { label: "Amount", value: `${params.amount ?? 0} SOL` },
-          { label: "Cost", value: "Free" },
         ];
       case "predict":
         return [

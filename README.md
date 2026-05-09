@@ -7,7 +7,6 @@ Instead of navigating complex menus, you simply chat with the agent to perform o
 ## ✨ Features
 
 - **🗣️ Natural Language Interface**: Chat with the agent to perform on-chain actions.
-- **💰 Devnet Faucet**: Request free Devnet SOL directly from the agent (`"Airdrop 2 SOL"`).
 - **💰 Receive Tokens**: Easily display your public address to receive assets (`"Show my address"`).
 - **💸 Send Tokens**: Transfer SOL to any valid address (`"Send 0.5 SOL to [address]"`).
 - **🔄 Swap Tokens**: Execute mock token swaps via on-chain Memo (`"Swap 1 SOL to USDC"`).
@@ -60,7 +59,6 @@ Make sure you have [Node.js](https://nodejs.org/) installed, and a Solana wallet
 
 - `"What is my balance?"`
 - `"Show my address"`
-- `"Airdrop 2 SOL"`
 - `"Send 1.5 SOL to HJE15qdoqv3hDpc57LCoovsXNANqHAUieQUb6m5PMhVq"`
 - `"Swap 5 SOL to USDC"`
 - `"Stake 10 SOL"`

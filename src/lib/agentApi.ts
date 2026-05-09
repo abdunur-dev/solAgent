@@ -43,24 +43,6 @@ export async function processAgentMessage(
     return textResponse("Transaction cancelled. What else can I help with?");
   }
 
-  // --- AIRDROP (get devnet testnet SOL) ---
-  if (lower.includes("airdrop") || lower.includes("faucet") || lower.includes("give me sol") || lower.includes("get sol") || lower.includes("request sol") || lower.includes("testnet")) {
-    const amountMatch = lower.match(/([\d.]+)/);
-    const amount = amountMatch ? Math.min(parseFloat(amountMatch[1]), 2) : 1;
-
-    return {
-      id: generateId(),
-      role: "agent",
-      content: `Ready to request ${amount} SOL airdrop from Solana Devnet faucet.\n\nDetails:\n  Wallet: ${shortAddr}\n  Amount: ${amount} SOL (free testnet tokens)\n  Network: Devnet\n  Note: Max 2 SOL per request\n\nReply "confirm" to receive the airdrop.`,
-      timestamp: Date.now(),
-      action: {
-        action: "airdrop",
-        params: { amount },
-        requiresConfirmation: true,
-      },
-    };
-  }
-
   // --- BALANCE CHECK ---
   if (lower.includes("balance") || lower.includes("how much") || lower.includes("how many sol")) {
     const tokenList = tokenBalances
@@ -68,12 +50,8 @@ export async function processAgentMessage(
       .map((t) => `  ${t.symbol}: ${formatBalance(t.balance)}`)
       .join("\n");
 
-    const lowBalanceHint = solBalance < 0.1
-      ? `\n\nYour balance is low. Type "airdrop 2 SOL" to get free testnet tokens.`
-      : "";
-
     return textResponse(
-      `Wallet: ${shortAddr}\n\nSOL Balance: ${solBalance.toFixed(4)} SOL\n\nToken Balances:\n${tokenList || "  No SPL tokens found"}\n\nNetwork: Solana Devnet${lowBalanceHint}`
+      `Wallet: ${shortAddr}\n\nSOL Balance: ${solBalance.toFixed(4)} SOL\n\nToken Balances:\n${tokenList || "  No SPL tokens found"}\n\nNetwork: Solana Devnet`
     );
   }
 
@@ -300,13 +278,26 @@ export async function processAgentMessage(
   // --- HELP / GENERAL ---
   if (lower.includes("help") || lower.includes("what can you")) {
     return textResponse(
-      `I am SolAgent, your AI wallet agent on Solana Devnet. Here is what I can do:\n\n  - Check your SOL and token balances\n  - Receive SOL ("Show my address")\n  - Request free testnet SOL ("Airdrop 2 SOL")\n  - Send SOL to any wallet address\n  - Swap tokens (on-chain memo on devnet)\n  - Stake SOL with validators\n  - Place predictions ("Predict 1 SOL on BTC > 100k")\n  - View your NFT collection\n  - Show transaction history\n\nAll actions create real on-chain transactions on Devnet. I will ask for confirmation before executing any transaction.`
+      `I am SolAgent, your AI wallet agent on Solana Devnet. Here is what I can do:\n\n  - Receive SOL ("Show my address")
+  - Send SOL to any wallet address
+  - Swap tokens (on-chain memo on devnet)
+  - Stake SOL with validators
+  - Place predictions ("Predict 1 SOL on BTC > 100k")
+  - View your NFT collection
+  - Show transaction history`
     );
   }
 
   // --- DEFAULT ---
   return textResponse(
-    `I understand your message. As SolAgent, I can help you with:\n\n  - Receive tokens ("How can I receive SOL?")\n  - Get testnet SOL ("Airdrop 2 SOL")\n  - Checking balances ("What is my SOL balance?")\n  - Sending tokens ("Send 0.5 SOL to [address]")\n  - Swapping tokens ("Swap 10 USDC to SOL")\n  - Staking SOL ("Stake 2 SOL")\n  - Placing predictions ("Predict 1 SOL on event")\n  - Viewing NFTs ("Show my NFTs")\n  - Transaction history ("Show my transactions")\n\nWhat would you like to do?`
+    `I understand your message. As SolAgent, I can help you with:\n\n  - Receive tokens ("How can I receive SOL?")
+  - Checking balances ("What is my SOL balance?")
+  - Sending tokens ("Send 0.5 SOL to [address]")
+  - Swapping tokens ("Swap 10 USDC to SOL")
+  - Staking SOL ("Stake 2 SOL")
+  - Placing predictions ("Predict 1 SOL on event")
+  - Viewing NFTs ("Show my NFTs")
+  - Transaction history ("Show my transactions")\n\nWhat would you like to do?`
   );
 }
 
@@ -353,16 +344,6 @@ function createConfirmExecution(
         content: `Executing stake of ${params.amount} SOL with validator...\n\nTransaction submitted. Your wallet will prompt you to sign.`,
         timestamp: Date.now(),
         action: { action: "confirm", params: { ...params, fromToken: "SOL" }, requiresConfirmation: false },
-        status: "pending",
-      };
-
-    case "airdrop":
-      return {
-        id: generateId(),
-        role: "agent",
-        content: `Requesting ${params.amount} SOL airdrop from Devnet faucet...\n\nProcessing your request. No wallet signature needed for airdrops.`,
-        timestamp: Date.now(),
-        action: { action: "confirm", params: { ...params, fromToken: "AIRDROP" }, requiresConfirmation: false },
         status: "pending",
       };
 

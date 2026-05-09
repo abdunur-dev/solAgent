@@ -9,7 +9,7 @@ import {
   toStored,
 } from "@/lib/memory";
 import { processAgentMessage } from "@/lib/agentApi";
-import { buildTransferTransaction, buildSwapTransaction, buildStakeTransaction, buildPredictionTransaction, requestDevnetAirdrop, isValidPublicKey } from "@/lib/solana";
+import { buildTransferTransaction, buildSwapTransaction, buildStakeTransaction, buildPredictionTransaction, isValidPublicKey } from "@/lib/solana";
 import type { useWalletData } from "@/hooks/useWalletData";
 
 const generateId = () => Math.random().toString(36).substring(2, 12);
@@ -193,26 +193,6 @@ export function useAgent(walletData: WalletDataReturn) {
     [publicKey, sendTransaction, connection, address]
   );
 
-  /** Execute a devnet airdrop */
-  const executeAirdrop = useCallback(
-    async (
-      amount: number
-    ): Promise<{ signature: string } | { error: string }> => {
-      if (!address) {
-        return { error: "Wallet not connected" };
-      }
-
-      try {
-        const signature = await requestDevnetAirdrop(address, amount);
-        return { signature };
-      } catch (err: unknown) {
-        const msg = err instanceof Error ? err.message : "Airdrop failed";
-        return { error: msg };
-      }
-    },
-    [address]
-  );
-
   /** Send a message and get agent response */
   const sendMessage = useCallback(
     async (text: string) => {
@@ -297,20 +277,6 @@ export function useAgent(walletData: WalletDataReturn) {
               agentResponse.content = `Stake failed: ${result.error}`;
               agentResponse.status = "error";
             }
-          } else if (actionParams.fromToken === "AIRDROP" && actionParams.amount) {
-            // It's an Airdrop Action
-            const result = await executeAirdrop(actionParams.amount);
-
-            if ("signature" in result) {
-              agentResponse.content = `Airdrop confirmed on Devnet.\n\nSignature: ${result.signature.slice(0, 16)}...\n\nYour balance will update shortly.`;
-              agentResponse.txSignature = result.signature;
-              agentResponse.status = "confirmed";
-
-              walletData.refresh();
-            } else {
-              agentResponse.content = `Airdrop failed: ${result.error}\n\nNote: Devnet faucet has rate limits. Try again later if it's exhausted.`;
-              agentResponse.status = "error";
-            }
           } else if (actionParams.fromToken === "PREDICT" && actionParams.amount && actionParams.predictionEvent) {
             // It's a Predict Action
             const result = await executePrediction(actionParams.amount, actionParams.predictionEvent);
@@ -347,7 +313,7 @@ export function useAgent(walletData: WalletDataReturn) {
         setIsLoading(false);
       }
     },
-    [messages, isLoading, address, walletData, executeTransfer, executeSwap, executeStake, executePrediction, executeAirdrop]
+    [messages, isLoading, address, walletData, executeTransfer, executeSwap, executeStake, executePrediction]
   );
 
   /** Clear all chat history */

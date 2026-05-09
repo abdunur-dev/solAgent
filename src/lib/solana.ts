@@ -215,21 +215,7 @@ export async function buildStakeTransaction(
 }
 
 /** Build a transaction to deactivate a stake account */
-/** Request a Devnet SOL airdrop */
-export async function requestDevnetAirdrop(
-  address: string,
-  amountSol: number = 1
-): Promise<string> {
-  const connection = getConnection();
-  const pubkey = new PublicKey(address);
-  // Devnet limits each airdrop to 2 SOL max
-  const clampedAmount = Math.min(amountSol, 2);
-  const lamports = Math.round(clampedAmount * LAMPORTS_PER_SOL);
-
-  const signature = await connection.requestAirdrop(pubkey, lamports);
-  await connection.confirmTransaction(signature, "confirmed");
-  return signature;
-}
+/** Validate a Solana public key */
 
 export function isValidPublicKey(address: string): boolean {
   try {

@@ -3,7 +3,6 @@ export type ActionType =
   | "swap"
   | "stake"
   | "receive"
-  | "airdrop"
   | "predict"
   | "balance"
   | "nfts"

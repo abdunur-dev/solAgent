@@ -17,11 +17,6 @@ interface SuggestedCommandsProps {
 
 const suggestions = [
   {
-    icon: Wallet,
-    text: "Airdrop 2 SOL",
-    color: "primary" as const,
-  },
-  {
     icon: Send,
     text: "Send 0.5 SOL to ABC123...",
     color: "secondary" as const,
