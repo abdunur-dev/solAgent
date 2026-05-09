@@ -3,7 +3,6 @@ import { useWallet, useConnection } from "@solana/wallet-adapter-react";
 import type { ChatMessage, StoredMessage } from "@/lib/types";
 import {
   loadMessages,
-  saveMessages,
   appendMessage,
   clearMessages,
   toStored,

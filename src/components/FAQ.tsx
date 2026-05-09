@@ -32,7 +32,7 @@ const faqs = [
 
 const FAQ: React.FC = () => {
   return (
-    <section className="py-20 relative">
+    <section id="faq" className="py-20 sm:py-28 relative">
       <div className="container mx-auto px-4 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -41,11 +41,14 @@ const FAQ: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="max-w-3xl mx-auto"
         >
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Frequently Asked <span className="text-glow-primary text-primary">Questions</span>
+          <div className="text-center mb-14">
+            <p className="font-mono text-xs tracking-[0.25em] uppercase text-primary mb-3">
+              <span className="text-primary">{">"}</span> Support
+            </p>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+              Frequently Asked Questions
             </h2>
-            <p className="text-muted-foreground text-lg">
+            <p className="text-muted-foreground text-sm sm:text-base max-w-lg mx-auto">
               Everything you need to know about SolAgent.
             </p>
           </div>
@@ -55,12 +58,12 @@ const FAQ: React.FC = () => {
               <AccordionItem
                 key={index}
                 value={`item-${index}`}
-                className="glass-card px-6 rounded-xl border border-primary/20 data-[state=open]:border-primary/50 transition-colors"
+                className="rounded-xl border border-border/60 bg-card/40 px-6 transition-all duration-300 hover:border-primary/30 data-[state=open]:border-primary/40 card-border-glow"
               >
-                <AccordionTrigger className="text-left text-lg font-medium hover:no-underline hover:text-primary transition-colors">
+                <AccordionTrigger className="text-left text-base font-medium hover:no-underline hover:text-primary transition-colors py-5">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground leading-relaxed pt-2 pb-6">
+                <AccordionContent className="text-muted-foreground leading-relaxed pt-2 pb-6 text-sm">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>

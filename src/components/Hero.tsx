@@ -1,11 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Play, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import ChatMockup from "./ChatMockup";
+
+const roles = ["Just Talk. It Executes.", "Say It. Get It Done.", "Words Become Actions."];
 
 const Hero: React.FC = () => {
   const navigate = useNavigate();
+  const [currentRole, setCurrentRole] = useState(0);
+  const [displayText, setDisplayText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const targetText = roles[currentRole];
+    const timeout = setTimeout(
+      () => {
+        if (!isDeleting) {
+          if (displayText.length < targetText.length) {
+            setDisplayText(targetText.slice(0, displayText.length + 1));
+          } else {
+            setTimeout(() => setIsDeleting(true), 2500);
+          }
+        } else {
+          if (displayText.length > 0) {
+            setDisplayText(displayText.slice(0, -1));
+          } else {
+            setIsDeleting(false);
+            setCurrentRole((prev) => (prev + 1) % roles.length);
+          }
+        }
+      },
+      isDeleting ? 40 : 80,
+    );
+    return () => clearTimeout(timeout);
+  }, [displayText, isDeleting, currentRole]);
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-16">
       {/* Animated grid background */}
@@ -30,9 +60,12 @@ const Hero: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5">
-                <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse-glow" />
-                <span className="text-xs font-medium text-primary tracking-wide uppercase">
+              <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
+                </span>
+                <span className="text-xs font-medium text-primary tracking-wide uppercase font-mono">
                   Powered by Solana
                 </span>
               </div>
@@ -50,8 +83,10 @@ const Hero: React.FC = () => {
                 <span className="text-foreground">on </span>
                 <span className="text-shimmer">Solana</span>
               </h1>
-              <p className="mt-2 text-2xl sm:text-3xl lg:text-4xl font-semibold text-primary text-glow-cyan">
-                Just Talk. It Executes.
+              <p className="mt-3 text-xl sm:text-2xl lg:text-3xl font-semibold">
+                <span className="typing-cursor text-gradient-cyan">
+                  {displayText}
+                </span>
               </p>
             </motion.div>
 
@@ -75,15 +110,22 @@ const Hero: React.FC = () => {
             >
               <button
                 onClick={() => navigate("/app")}
-                className="btn-neon-primary text-base flex items-center gap-2 neon-pulse"
+                className="btn-neon-primary text-base flex items-center gap-2 group"
               >
                 Launch App
-                <ArrowRight size={18} />
+                <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
               </button>
-              <button className="btn-neon-ghost text-base flex items-center gap-2">
-                <Play size={16} />
-                Watch Demo
-              </button>
+              <a
+                href="#how-it-works"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.querySelector("#how-it-works")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="btn-neon-ghost text-base flex items-center gap-2 group"
+              >
+                How it Works
+                <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+              </a>
             </motion.div>
 
             {/* Stats */}
@@ -102,7 +144,7 @@ const Hero: React.FC = () => {
                   <div className="text-xl sm:text-2xl font-bold text-foreground">
                     {stat.value}
                   </div>
-                  <div className="text-xs text-muted-foreground mt-0.5">
+                  <div className="text-xs text-muted-foreground mt-0.5 font-mono">
                     {stat.label}
                   </div>
                 </div>
@@ -121,6 +163,17 @@ const Hero: React.FC = () => {
           </motion.div>
         </div>
       </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2"
+      >
+        <span className="font-mono text-[10px] text-muted-foreground tracking-widest uppercase">Scroll</span>
+        <div className="w-px h-10 bg-gradient-to-b from-primary/50 to-transparent animate-scroll-pulse" />
+      </motion.div>
 
       {/* Bottom gradient fade */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />

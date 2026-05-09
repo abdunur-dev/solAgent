@@ -34,7 +34,7 @@ export async function processAgentMessage(
       .find((m) => m.role === "agent" && m.action?.requiresConfirmation);
 
     if (lastAgentMsg?.action) {
-      return createConfirmExecution(lastAgentMsg.action, walletAddress);
+      return createConfirmExecution(lastAgentMsg.action);
     }
     return textResponse("There is no pending action to confirm. What would you like to do?");
   }
@@ -336,8 +336,7 @@ function textResponse(content: string): ChatMessage {
 }
 
 function createConfirmExecution(
-  action: AgentAction,
-  _walletAddress: string
+  action: AgentAction
 ): ChatMessage {
   const { action: actionType, params } = action;
 

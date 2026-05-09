@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { CheckCircle2, Circle, Rocket, Globe, Shield } from "lucide-react";
+import { CheckCircle2, Rocket, Globe, Shield } from "lucide-react";
 
 const milestones = [
   {
@@ -47,54 +47,60 @@ const Roadmap: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
+          <p className="font-mono text-xs tracking-[0.25em] uppercase text-primary mb-3">
+            <span className="text-primary">{">"}</span> Timeline
+          </p>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
             Roadmap
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
             Our journey towards making DeFi accessible to everyone through the power of Artificial Intelligence.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-          {milestones.map((m, i) => (
-            <motion.div
-              key={m.phase}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className={`relative p-8 rounded-2xl border ${
-                m.status === "current"
-                  ? "border-primary/40 bg-primary/5 shadow-[0_0_20px_-5px_rgba(0,255,255,0.1)]"
-                  : "border-border/50 glass-card"
-              }`}
-            >
-              {m.status === "current" && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-primary text-black text-[10px] font-bold rounded-full uppercase tracking-tighter">
-                  In Progress
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          {milestones.map((m, i) => {
+            const Icon = m.icon;
+            return (
+              <motion.div
+                key={m.phase}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className={`relative p-8 rounded-2xl border transition-all duration-300 hover-lift ${
+                  m.status === "current"
+                    ? "border-primary/40 bg-primary/5 shadow-[0_0_20px_-5px_rgba(0,255,255,0.1)]"
+                    : "border-border/60 bg-card/40"
+                }`}
+              >
+                {m.status === "current" && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-primary text-black text-[10px] font-bold rounded-full uppercase tracking-tighter font-mono">
+                    In Progress
+                  </div>
+                )}
+
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-[10px] font-bold text-primary uppercase tracking-widest font-mono">
+                    {m.phase}
+                  </span>
+                  <Icon size={16} className={m.status === "completed" ? "text-primary" : "text-muted-foreground/30"} />
                 </div>
-              )}
-              
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-[10px] font-bold text-primary uppercase tracking-widest">
-                  {m.phase}
-                </span>
-                <m.icon size={16} className={m.status === "completed" ? "text-primary" : "text-muted-foreground/30"} />
-              </div>
 
-              <h3 className="text-lg font-bold text-foreground mb-1">{m.title}</h3>
-              <p className="text-xs text-muted-foreground mb-6">{m.date}</p>
+                <h3 className="text-lg font-bold text-foreground mb-1">{m.title}</h3>
+                <p className="text-xs text-muted-foreground mb-6 font-mono">{m.date}</p>
 
-              <ul className="space-y-3">
-                {m.items.map((item) => (
-                  <li key={item} className="flex items-start gap-2 text-xs text-muted-foreground/80">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary/30 mt-1 flex-shrink-0" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          ))}
+                <ul className="space-y-3">
+                  {m.items.map((item) => (
+                    <li key={item} className="flex items-start gap-2 text-xs text-muted-foreground/80">
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary/30 mt-1.5 flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 
 const WalletConnect: React.FC = () => {
-  const { wallets, select, wallet, connect, connecting, connected, publicKey, disconnect } =
+  const { wallets, select, wallet, connect, connecting, connected, publicKey } =
     useWallet();
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
