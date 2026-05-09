@@ -272,6 +272,31 @@ export async function processAgentMessage(
     };
   }
 
+  // --- KNOWLEDGE BASE / ABOUT ---
+  if (lower.includes("who are you") || lower.includes("what is solagent") || (lower.includes("tell me") && lower.includes("about"))) {
+    return textResponse(
+      "I am SolAgent, your advanced AI companion on the Solana blockchain. My mission is to bridge the gap between complex DeFi protocols and everyday users through natural language.\n\nI can help you navigate the Solana ecosystem—from simple transfers to complex staking and token swaps—all while you keep full control of your keys. I currently operate on the Solana Devnet for testing and development."
+    );
+  }
+
+  if (lower.includes("safe") || lower.includes("security") || lower.includes("trust")) {
+    return textResponse(
+      "Safety is my top priority. I am **non-custodial**, meaning I never store your private keys or access your funds without your permission. \n\nEvery transaction I prepare must be signed and approved by your connected wallet (like Phantom or Solflare) before it hits the blockchain. You have the final say on every single lamport."
+    );
+  }
+
+  if (lower.includes("mission") || lower.includes("goal") || lower.includes("future")) {
+    return textResponse(
+      "My goal is to become the primary interface for the decentralized world. In the future, I will support multi-chain operations, automated yield farming, and even AI-driven portfolio rebalancing. \n\nWe believe that the future of finance should be as simple as sending a text message."
+    );
+  }
+
+  if (lower.includes("creator") || lower.includes("who made you") || lower.includes("developer")) {
+    return textResponse(
+      "I was developed by the SolAgent team (led by @abdunur-dev) to simplify the Web3 experience. You can find my source code and contribute to my growth on [GitHub](https://github.com/abdunur-dev/solAgent)."
+    );
+  }
+
   // --- HELP / GENERAL ---
   if (lower.includes("help") || lower.includes("what can you")) {
     return textResponse(
