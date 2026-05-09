@@ -193,6 +193,12 @@ export async function processAgentMessage(
       );
     }
 
+    if (stakeAccount === walletAddress) {
+      return textResponse(
+        "You provided your wallet address, but I need the address of your **stake account**. \n\nYou can find your stake account addresses in your wallet's staking section or on Solscan."
+      );
+    }
+
     return {
       id: generateId(),
       role: "agent",

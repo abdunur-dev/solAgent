@@ -223,10 +223,12 @@ export async function buildUnstakeTransaction(
   const pubkey = new PublicKey(walletAddress);
   const stakePubkey = new PublicKey(stakeAccountAddress);
 
-  const transaction = StakeProgram.deactivate({
+  const deactivateTx = StakeProgram.deactivate({
     stakePubkey,
     authorizedPubkey: pubkey,
   });
+
+  const transaction = new Transaction().add(...deactivateTx.instructions);
 
   const { blockhash } = await connection.getLatestBlockhash();
   transaction.recentBlockhash = blockhash;
