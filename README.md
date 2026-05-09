@@ -8,10 +8,10 @@ Instead of navigating complex menus, you simply chat with the agent to perform o
 
 - **🗣️ Natural Language Interface**: Chat with the agent to perform on-chain actions.
 - **💰 Devnet Faucet**: Request free Devnet SOL directly from the agent (`"Airdrop 2 SOL"`).
+- **💰 Receive Tokens**: Easily display your public address to receive assets (`"Show my address"`).
 - **💸 Send Tokens**: Transfer SOL to any valid address (`"Send 0.5 SOL to [address]"`).
 - **🔄 Swap Tokens**: Execute mock token swaps via on-chain Memo (`"Swap 1 SOL to USDC"`).
 - **🥩 Staking**: Stake SOL with validators (`"Stake 2 SOL"`).
-- **🔓 Unstaking**: Deactivate stake accounts (`"Unstake [address]"`).
 - **🔮 Prediction Markets**: Place mock bets and predictions on-chain (`"Predict 1 SOL on BTC > 100k"`).
 - **📊 Portfolio Overview**: Check your SOL and SPL token balances.
 - **📜 Transaction History**: View your recent on-chain activity.
@@ -59,10 +59,10 @@ Make sure you have [Node.js](https://nodejs.org/) installed, and a Solana wallet
 ## 📜 Example Commands
 
 - `"What is my balance?"`
+- `"Show my address"`
 - `"Airdrop 2 SOL"`
 - `"Send 1.5 SOL to HJE15qdoqv3hDpc57LCoovsXNANqHAUieQUb6m5PMhVq"`
 - `"Swap 5 SOL to USDC"`
 - `"Stake 10 SOL"`
-- `"Unstake [stake-account-address]"`
 - `"Predict 2 SOL that Solana reaches $250"`
 - `"Show my transaction history"`

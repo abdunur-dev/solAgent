@@ -50,11 +50,6 @@ const suggestions = [
     text: "Predict 1 SOL on BTC > 100k",
     color: "primary" as const,
   },
-  {
-    icon: Landmark,
-    text: "Unstake SOL",
-    color: "secondary" as const,
-  },
 ];
 
 const colorStyles = {

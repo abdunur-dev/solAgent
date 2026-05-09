@@ -26,29 +26,6 @@ export async function processAgentMessage(
   const { walletAddress, solBalance, tokenBalances, recentTransactions } = context;
   const shortAddr = shortenAddress(walletAddress, 4);
 
-  // --- CONTEXTUAL ADDRESS HANDLING ---
-  const addrMatch = userMessage.match(/[1-9A-HJ-NP-Za-km-z]{32,44}/);
-  if (addrMatch && userMessage.trim() === addrMatch[0]) {
-    const lastAgentMsg = [...context.conversationHistory]
-      .reverse()
-      .find((m) => m.role === "agent");
-
-    if (lastAgentMsg?.content.includes("unstake SOL, please provide the stake account address")) {
-      const stakeAccount = addrMatch[0];
-      return {
-        id: generateId(),
-        role: "agent",
-        content: `Ready to unstake (deactivate) stake account: ${shortenAddress(stakeAccount, 6)}.\n\nDetails:\n  Account: ${stakeAccount}\n  Action: Deactivate\n  Note: After deactivation, you must wait ~2 days (1 epoch) to withdraw the SOL.\n\nReply "confirm" to unstake.`,
-        timestamp: Date.now(),
-        action: {
-          action: "unstake",
-          params: { stakeAccount },
-          requiresConfirmation: true,
-        },
-      };
-    }
-  }
-
   // --- CONFIRMATION RESPONSES ---
   if (lower === "yes" || lower === "confirm" || lower === "y" || lower === "proceed") {
     // Look back for a pending action
@@ -180,38 +157,6 @@ export async function processAgentMessage(
     );
   }
 
-  // --- UNSTAKE ---
-  if (lower.includes("unstake")) {
-    const addrMatch = userMessage.match(/[1-9A-HJ-NP-Za-km-z]{32,44}/g);
-    const stakeAccount = addrMatch
-      ? addrMatch.find((a) => a !== walletAddress)
-      : null;
-
-    if (!stakeAccount) {
-      return textResponse(
-        "To unstake SOL, please provide the stake account address. For example: Unstake [stake-account-address]"
-      );
-    }
-
-    if (stakeAccount === walletAddress) {
-      return textResponse(
-        "You provided your wallet address, but I need the address of your **stake account**. \n\nYou can find your stake account addresses in your wallet's staking section or on Solscan."
-      );
-    }
-
-    return {
-      id: generateId(),
-      role: "agent",
-      content: `Ready to unstake (deactivate) stake account: ${shortenAddress(stakeAccount, 6)}.\n\nDetails:\n  Account: ${stakeAccount}\n  Action: Deactivate\n  Note: After deactivation, you must wait ~2 days (1 epoch) to withdraw the SOL.\n\nReply "confirm" to unstake.`,
-      timestamp: Date.now(),
-      action: {
-        action: "unstake",
-        params: { stakeAccount },
-        requiresConfirmation: true,
-      },
-    };
-  }
-
   // --- STAKE ---
   if (lower.includes("stake")) {
     const stakeMatch = lower.match(/([\d.]+)\s*sol/) || lower.match(/stake\s+([\d.]+)/);
@@ -307,16 +252,23 @@ export async function processAgentMessage(
     );
   }
 
+  // --- RECEIVE ---
+  if (lower.includes("receive") || lower.includes("deposit") || lower.includes("my address") || lower.includes("show address")) {
+    return textResponse(
+      `Your public wallet address is:\n\n\`${walletAddress}\`\n\nYou can use this address to receive SOL and other tokens on the Solana Devnet.`
+    );
+  }
+
   // --- HELP / GENERAL ---
   if (lower.includes("help") || lower.includes("what can you")) {
     return textResponse(
-      `I am SolAgent, your AI wallet agent on Solana Devnet. Here is what I can do:\n\n  - Check your SOL and token balances\n  - Request free testnet SOL ("Airdrop 2 SOL")\n  - Send SOL to any wallet address\n  - Swap tokens (on-chain memo on devnet)\n  - Stake SOL with validators\n  - Place predictions ("Predict 1 SOL on BTC > 100k")\n  - View your NFT collection\n  - Show transaction history\n\nAll actions create real on-chain transactions on Devnet. I will ask for confirmation before executing any transaction.`
+      `I am SolAgent, your AI wallet agent on Solana Devnet. Here is what I can do:\n\n  - Check your SOL and token balances\n  - Receive SOL ("Show my address")\n  - Request free testnet SOL ("Airdrop 2 SOL")\n  - Send SOL to any wallet address\n  - Swap tokens (on-chain memo on devnet)\n  - Stake SOL with validators\n  - Place predictions ("Predict 1 SOL on BTC > 100k")\n  - View your NFT collection\n  - Show transaction history\n\nAll actions create real on-chain transactions on Devnet. I will ask for confirmation before executing any transaction.`
     );
   }
 
   // --- DEFAULT ---
   return textResponse(
-    `I understand your message. As SolAgent, I can help you with:\n\n  - Get testnet SOL ("Airdrop 2 SOL")\n  - Checking balances ("What is my SOL balance?")\n  - Sending tokens ("Send 0.5 SOL to [address]")\n  - Swapping tokens ("Swap 10 USDC to SOL")\n  - Staking SOL ("Stake 2 SOL")\n  - Placing predictions ("Predict 1 SOL on event")\n  - Viewing NFTs ("Show my NFTs")\n  - Transaction history ("Show my transactions")\n\nWhat would you like to do?`
+    `I understand your message. As SolAgent, I can help you with:\n\n  - Receive tokens ("How can I receive SOL?")\n  - Get testnet SOL ("Airdrop 2 SOL")\n  - Checking balances ("What is my SOL balance?")\n  - Sending tokens ("Send 0.5 SOL to [address]")\n  - Swapping tokens ("Swap 10 USDC to SOL")\n  - Staking SOL ("Stake 2 SOL")\n  - Placing predictions ("Predict 1 SOL on event")\n  - Viewing NFTs ("Show my NFTs")\n  - Transaction history ("Show my transactions")\n\nWhat would you like to do?`
   );
 }
 
@@ -363,16 +315,6 @@ function createConfirmExecution(
         content: `Executing stake of ${params.amount} SOL with validator...\n\nTransaction submitted. Your wallet will prompt you to sign.`,
         timestamp: Date.now(),
         action: { action: "confirm", params: { ...params, fromToken: "SOL" }, requiresConfirmation: false },
-        status: "pending",
-      };
-
-    case "unstake":
-      return {
-        id: generateId(),
-        role: "agent",
-        content: `Deactivating stake account ${shortenAddress(params.stakeAccount ?? "", 6)}...\n\nTransaction submitted. Your wallet will prompt you to sign.`,
-        timestamp: Date.now(),
-        action: { action: "confirm", params, requiresConfirmation: false },
         status: "pending",
       };
 

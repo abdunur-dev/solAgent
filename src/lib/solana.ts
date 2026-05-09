@@ -215,53 +215,6 @@ export async function buildStakeTransaction(
 }
 
 /** Build a transaction to deactivate a stake account */
-export async function buildUnstakeTransaction(
-  walletAddress: string,
-  stakeAccountAddress: string
-): Promise<Transaction> {
-  const connection = getConnection();
-  const pubkey = new PublicKey(walletAddress);
-  const stakePubkey = new PublicKey(stakeAccountAddress);
-
-  const deactivateTx = StakeProgram.deactivate({
-    stakePubkey,
-    authorizedPubkey: pubkey,
-  });
-
-  const transaction = new Transaction().add(...deactivateTx.instructions);
-
-  const { blockhash } = await connection.getLatestBlockhash();
-  transaction.recentBlockhash = blockhash;
-  transaction.feePayer = pubkey;
-
-  return transaction;
-}
-
-/** Find stake accounts owned by a wallet */
-export async function findStakeAccounts(walletAddress: string) {
-  const connection = getConnection();
-  const pubkey = new PublicKey(walletAddress);
-  
-  const accounts = await connection.getParsedProgramAccounts(
-    StakeProgram.programId,
-    {
-      filters: [
-        {
-          dataSize: 200, // Stake account size
-        },
-        {
-          memcmp: {
-            offset: 44, // Offset for authorized staker
-            bytes: pubkey.toBase58(),
-          },
-        },
-      ],
-    }
-  );
-
-  return accounts;
-}
-
 /** Request a Devnet SOL airdrop */
 export async function requestDevnetAirdrop(
   address: string,
