@@ -13,6 +13,19 @@ import type { TokenBalance, TransactionRecord } from "./types";
 
 const DEVNET_URL = "https://api.devnet.solana.com";
 
+const KNOWN_TOKEN_SYMBOLS: Record<string, { symbol: string; name: string }> = {
+  "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v": { symbol: "USDC", name: "USD Coin" },
+  "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB": { symbol: "USDT", name: "Tether USD" },
+  "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263": { symbol: "BONK", name: "Bonk" },
+  "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm": { symbol: "WIF", name: "dogwifhat" },
+  "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr": { symbol: "POPCAT", name: "Popcat" },
+  "zebeczgi5fSEtbpfQKVZKCJ3WgYXxjkMUkNNx7fLKAF": { symbol: "ZEBEC", name: "Zebec Network" },
+  "mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So": { symbol: "mSOL", name: "Marinade Staked SOL" },
+  "J1toso1uCk3QLmjYXoTpK9KAnKjBy4Fj3grfY7nehY7v": { symbol: "JitoSOL", name: "Jito Staked SOL" },
+  "bSo13r4TkiE4KumL71LsHTPpL2euBY2xEaeDSEfd3vb": { symbol: "bSOL", name: "Blaze Staked SOL" },
+  "7dHbWXmci3dT8UFYWYZweBLXgycu7Y3iL6trKn1Y7ARj": { symbol: "stSOL", name: "Lido Staked SOL" },
+};
+
 let _connection: Connection | null = null;
 
 export function getConnection(): Connection {
@@ -49,15 +62,17 @@ export async function getTokenBalances(
         const info = account.account.data.parsed.info;
         const amount = info.tokenAmount;
         if (amount.uiAmount === 0) return null;
+        const known = KNOWN_TOKEN_SYMBOLS[info.mint];
         return {
-          symbol: info.mint.slice(0, 4).toUpperCase(),
-          name: info.mint,
+          symbol: known?.symbol ?? `Token (${info.mint.slice(0, 6)})`,
+          name: known?.name ?? info.mint,
           balance: amount.uiAmount ?? 0,
           mint: info.mint,
           decimals: amount.decimals,
         };
       })
       .filter(Boolean) as TokenBalance[];
+    tokens.sort((a, b) => b.balance - a.balance);
 
     return tokens.slice(0, 10);
   } catch {

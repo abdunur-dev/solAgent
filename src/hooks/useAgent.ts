@@ -223,71 +223,42 @@ export function useAgent(walletData: WalletDataReturn) {
           conversationHistory: storedHistory,
         });
 
-        // If this is a confirm execution, try real transfer or swap
+        // If this is a confirm execution, execute the original action on-chain
         if (agentResponse.action?.action === "confirm") {
           const actionParams = agentResponse.action.params;
+          const originalAction = actionParams.originalAction;
 
-          if (actionParams.recipient && actionParams.amount) {
-            // It's a Send Action
-            const result = await executeTransfer(
-              actionParams.recipient,
-              actionParams.amount
-            );
+          let result: { signature: string } | { error: string } | null = null;
 
+          switch (originalAction) {
+            case "send":
+              result = await executeTransfer(actionParams.recipient!, actionParams.amount!);
+              break;
+            case "swap":
+            case "bridge":
+              result = await executeSwap(actionParams.fromToken!, actionParams.toToken!, actionParams.amount!);
+              break;
+            case "stake":
+              result = await executeStake(actionParams.amount!);
+              break;
+            case "predict":
+              result = await executePrediction(actionParams.amount!, actionParams.predictionEvent!);
+              break;
+          }
+
+          if (result) {
             if ("signature" in result) {
-              agentResponse.content = `Transfer confirmed on-chain.\n\nSignature: ${result.signature.slice(0, 16)}...\n\nView on Solscan for full details. Your balance will update shortly.`;
+              const label = originalAction === "swap" ? "Swap simulation" :
+                originalAction === "bridge" ? "Bridge simulation" :
+                originalAction === "send" ? "Transfer" :
+                originalAction === "stake" ? "Stake" :
+                "Prediction";
+              agentResponse.content = `${label} confirmed on-chain.\n\nSignature: ${result.signature.slice(0, 16)}...\n\nView on Solscan for full details. Your balance will update shortly.`;
               agentResponse.txSignature = result.signature;
               agentResponse.status = "confirmed";
-
               walletData.refresh();
             } else {
               agentResponse.content = `Transaction failed: ${result.error}`;
-              agentResponse.status = "error";
-            }
-          } else if (actionParams.fromToken && actionParams.toToken && actionParams.amount) {
-            // It's a Swap Action
-            const result = await executeSwap(
-              actionParams.fromToken,
-              actionParams.toToken,
-              actionParams.amount
-            );
-
-            if ("signature" in result) {
-              agentResponse.content = `Swap simulation confirmed on-chain via Memo.\n\nSignature: ${result.signature.slice(0, 16)}...\n\nNote: On Devnet, balances are not actually exchanged, but the transaction is verified and recorded.`;
-              agentResponse.txSignature = result.signature;
-              agentResponse.status = "confirmed";
-
-              walletData.refresh();
-            } else {
-              agentResponse.content = `Swap failed: ${result.error}`;
-              agentResponse.status = "error";
-            }
-          } else if (actionParams.fromToken === "SOL" && actionParams.amount) {
-            // It's a Stake Action
-            const result = await executeStake(actionParams.amount);
-
-            if ("signature" in result) {
-              agentResponse.content = `Stake confirmed on-chain.\n\nSignature: ${result.signature.slice(0, 16)}...\n\nView on Solscan for full details.`;
-              agentResponse.txSignature = result.signature;
-              agentResponse.status = "confirmed";
-
-              walletData.refresh();
-            } else {
-              agentResponse.content = `Stake failed: ${result.error}`;
-              agentResponse.status = "error";
-            }
-          } else if (actionParams.fromToken === "PREDICT" && actionParams.amount && actionParams.predictionEvent) {
-            // It's a Predict Action
-            const result = await executePrediction(actionParams.amount, actionParams.predictionEvent);
-
-            if ("signature" in result) {
-              agentResponse.content = `Prediction confirmed on-chain.\n\nSignature: ${result.signature.slice(0, 16)}...\n\nView on Solscan for full details.`;
-              agentResponse.txSignature = result.signature;
-              agentResponse.status = "confirmed";
-
-              walletData.refresh();
-            } else {
-              agentResponse.content = `Prediction failed: ${result.error}`;
               agentResponse.status = "error";
             }
           }

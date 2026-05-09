@@ -22,6 +22,7 @@ export function useWalletData() {
   });
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchAll = useCallback(
     async (silent = false) => {
@@ -31,6 +32,7 @@ export function useWalletData() {
       else setRefreshing(true);
 
       try {
+        setError(null);
         const [solBalance, tokens, transactions] = await Promise.all([
           getSolBalance(address),
           getTokenBalances(address),
@@ -44,8 +46,8 @@ export function useWalletData() {
           transactions,
           lastFetched: Date.now(),
         });
-      } catch {
-        // Keep existing data on error
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to fetch wallet data");
       } finally {
         setLoading(false);
         setRefreshing(false);
@@ -73,6 +75,7 @@ export function useWalletData() {
     ...data,
     loading,
     refreshing,
+    error,
     refresh,
     isStale,
   };

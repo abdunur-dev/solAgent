@@ -24,6 +24,8 @@ const ConfirmCard: React.FC<ConfirmCardProps> = ({
         return "Confirm Transfer";
       case "swap":
         return "Confirm Swap";
+      case "bridge":
+        return "Confirm Bridge";
       case "stake":
         return "Confirm Staking";
       case "predict":
@@ -51,6 +53,12 @@ const ConfirmCard: React.FC<ConfirmCardProps> = ({
           { label: "Sell", value: `${params.amount ?? 0} ${params.fromToken ?? ""}` },
           { label: "Buy", value: `${params.toToken ?? ""}` },
           { label: "Slippage", value: "0.5%" },
+        ];
+      case "bridge":
+        return [
+          { label: "Amount", value: `${params.amount ?? 0} ${params.fromToken ?? ""}` },
+          { label: "To Chain", value: params.toToken ?? "" },
+          { label: "Est. Time", value: "5-10 min" },
         ];
       case "stake":
         return [

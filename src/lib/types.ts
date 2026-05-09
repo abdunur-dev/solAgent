@@ -1,6 +1,7 @@
 export type ActionType =
   | "send"
   | "swap"
+  | "bridge"
   | "stake"
   | "receive"
   | "predict"
@@ -20,6 +21,7 @@ export interface AgentAction {
     recipient?: string;
     message?: string;
     predictionEvent?: string;
+    originalAction?: string;
   };
   requiresConfirmation: boolean;
 }
