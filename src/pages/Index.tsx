@@ -3,6 +3,30 @@ import { useNavigate } from 'react-router-dom';
 
 const Index: React.FC = () => {
   const navigate = useNavigate();
+  const [openFaq, setOpenFaq] = React.useState<number | null>(null);
+
+  const faqs = [
+    {
+      q: "What is SolAgent?",
+      a: "SolAgent is an AI-powered agent for the Solana blockchain that lets you execute complex transactions like swaps, transfers, and staking using natural language. No more complex UIs—just talk to Solana."
+    },
+    {
+      q: "Is this safe to use?",
+      a: "Absolutely. SolAgent is non-custodial and open-source. Your private keys never leave your wallet, and every transaction requires your explicit approval via your preferred wallet (Phantom, Backpack, etc.)."
+    },
+    {
+      q: "Does it work on Mainnet?",
+      a: "Currently, SolAgent is in Alpha and optimized for Solana Devnet. This allows users to test the AI capabilities safely. Mainnet launch is scheduled for Q3 2026 as per our roadmap."
+    },
+    {
+      q: "How do I get Devnet SOL?",
+      a: "You can get free Devnet SOL from the official Solana Faucet at faucet.solana.com. Simply paste your wallet address and request an airdrop to start testing SolAgent immediately."
+    },
+    {
+      q: "What kind of transactions can I do?",
+      a: "You can perform token swaps via Jupiter, bridge assets across 60+ chains via LI.FI, stake SOL with validators, send instant transfers, and even interact with prediction markets—all through simple text commands."
+    }
+  ];
 
   const handleLaunch = () => {
     navigate('/app');
@@ -299,16 +323,35 @@ const Index: React.FC = () => {
           </div>
           
           <div className="space-y-4">
-            {[
-              "What is SolAgent?",
-              "Is this safe to use?",
-              "Does it work on Mainnet?",
-              "How do I get Devnet SOL?",
-              "What kind of transactions can I do?"
-            ].map((q, i) => (
-              <div key={i} className="bg-white/5 border border-white/5 rounded-xl px-6 py-5 flex items-center justify-between group cursor-pointer hover:bg-white/10 transition-colors">
-                <span className="text-white/80 font-medium">{q}</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/20 group-hover:text-solana-cyan transition-colors"><path d="M12 5v14M5 12h14"/></svg>
+            {faqs.map((faq, i) => (
+              <div 
+                key={i} 
+                className={`bg-white/5 border border-white/5 rounded-xl overflow-hidden transition-all duration-300 ${openFaq === i ? 'bg-white/[0.08] border-solana-cyan/30' : 'hover:bg-white/10'}`}
+              >
+                <button 
+                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                  className="w-full px-6 py-5 flex items-center justify-between text-left cursor-pointer"
+                >
+                  <span className={`font-medium transition-colors ${openFaq === i ? 'text-solana-cyan' : 'text-white/80'}`}>{faq.q}</span>
+                  <svg 
+                    width="20" 
+                    height="20" 
+                    viewBox="0 0 24 24" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    strokeWidth="2" 
+                    className={`transition-transform duration-300 ${openFaq === i ? 'rotate-45 text-solana-cyan' : 'text-white/20'}`}
+                  >
+                    <path d="M12 5v14M5 12h14"/>
+                  </svg>
+                </button>
+                <div 
+                  className={`px-6 transition-all duration-300 ease-in-out ${openFaq === i ? 'max-h-40 pb-5 opacity-100' : 'max-h-0 opacity-0'}`}
+                >
+                  <p className="text-white/50 text-sm leading-relaxed">
+                    {faq.a}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
