@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Github, Twitter } from "lucide-react";
+import { Github } from "lucide-react";
 
 const Footer: React.FC = () => {
   return (
@@ -30,13 +30,6 @@ const Footer: React.FC = () => {
 
           {/* Social links */}
           <div className="flex items-center gap-4">
-            <a
-              href="#"
-              className="w-9 h-9 rounded-lg glass-card flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/30 transition-all duration-300"
-              aria-label="Twitter"
-            >
-              <Twitter size={16} />
-            </a>
             <a
               href="#"
               className="w-9 h-9 rounded-lg glass-card flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/30 transition-all duration-300"
