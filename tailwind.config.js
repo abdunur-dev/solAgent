@@ -69,12 +69,10 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
         neon: {
-          cyan: "hsl(180 100% 50%)",
           purple: "hsl(263 100% 63%)",
           pink: "hsl(300 100% 50%)",
         },
         solana: {
-          cyan: '#00FFA3',
           purple: '#9945FF',
           dark: '#0d0d0d',
         }

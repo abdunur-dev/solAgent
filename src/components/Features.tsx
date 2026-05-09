@@ -74,7 +74,7 @@ const fadeUp = {
 const Features: React.FC = () => {
   return (
     <section id="features" className="relative py-24 sm:py-32">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[radial-gradient(ellipse_at_center,_hsl(180_100%_50%_/_0.03)_0%,_transparent_60%)]" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[radial-gradient(ellipse_at_center,_hsl(263_100%_63%_/_0.04)_0%,_transparent_60%)]" />
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <motion.div
@@ -109,7 +109,7 @@ const Features: React.FC = () => {
                 variants={fadeUp}
                 className="group relative rounded-2xl border border-border/60 bg-card/40 p-6 sm:p-7 overflow-hidden hover-lift card-border-glow"
               >
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_hsl(180_100%_50%_/_0.04)_0%,_transparent_50%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_hsl(263_100%_63%_/_0.04)_0%,_transparent_50%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                 <div className="relative z-10">
                   <div className="flex items-start justify-between mb-5">

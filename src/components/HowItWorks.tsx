@@ -35,7 +35,7 @@ const fadeUp = {
 const HowItWorks: React.FC = () => {
   return (
     <section id="how-it-works" className="relative py-24 sm:py-32">
-      <div className="absolute inset-0 bg-grid opacity-40" />
+      <div className="absolute inset-0 bg-pixel-grid opacity-40" />
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <motion.div
@@ -81,7 +81,7 @@ const HowItWorks: React.FC = () => {
                   </div>
                 </div>
 
-                <h3 className="text-lg font-semibold text-foreground mb-2 transition-colors group-hover:text-gradient-cyan">
+                <h3 className="text-lg font-semibold text-foreground mb-2 transition-colors group-hover:text-gradient-purple">
                   {step.title}
                 </h3>
                 <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">

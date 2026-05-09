@@ -41,7 +41,7 @@ const FAQ: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="max-w-3xl mx-auto"
         >
-          <div className="text-center mb-14">
+              <div className="text-center mb-14">
             <p className="font-mono text-xs tracking-[0.25em] uppercase text-primary mb-3">
               <span className="text-primary">{">"}</span> Support
             </p>
@@ -53,22 +53,23 @@ const FAQ: React.FC = () => {
             </p>
           </div>
 
-          <Accordion type="single" collapsible className="w-full space-y-4">
+          <div className="grid sm:grid-cols-2 gap-4">
             {faqs.map((faq, index) => (
-              <AccordionItem
-                key={index}
-                value={`item-${index}`}
-                className="rounded-xl border border-border/60 bg-card/40 px-6 transition-all duration-300 hover:border-primary/30 data-[state=open]:border-primary/40 card-border-glow"
-              >
-                <AccordionTrigger className="text-left text-base font-medium hover:no-underline hover:text-primary transition-colors py-5">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground leading-relaxed pt-2 pb-6 text-sm">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
+              <Accordion type="single" collapsible key={index} className="w-full">
+                <AccordionItem
+                  value={`item-${index}`}
+                  className="rounded-xl border border-border/60 bg-card/40 px-5 transition-all duration-300 hover:border-primary/30 data-[state=open]:border-primary/40 card-border-glow"
+                >
+                  <AccordionTrigger className="text-left text-sm font-medium hover:no-underline hover:text-primary transition-colors py-4">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground leading-relaxed pt-1 pb-5 text-sm">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             ))}
-          </Accordion>
+          </div>
         </motion.div>
       </div>
     </section>

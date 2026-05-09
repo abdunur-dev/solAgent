@@ -111,7 +111,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ agent }) => {
         <div
           className={`flex items-center gap-3 px-4 py-3 rounded-2xl border transition-all duration-300 ${
             inputFocused
-              ? "glass-card border-primary/30 border-glow-cyan"
+              ? "glass-card border-primary/30 border-glow-purple"
               : "glass-card border-border/50"
           }`}
         >

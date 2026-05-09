@@ -39,16 +39,16 @@ const Hero: React.FC = () => {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-16">
       {/* Animated grid background */}
-      <div className="absolute inset-0 bg-grid-hero animate-grid-move opacity-60" />
+        <div className="absolute inset-0 bg-pixel-grid-animated opacity-40" />
 
       {/* Radial gradient overlays */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-[radial-gradient(ellipse_at_center,_hsl(180_100%_50%_/_0.06)_0%,_transparent_70%)]" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-[radial-gradient(ellipse_at_center,_hsl(263_100%_63%_/_0.08)_0%,_transparent_70%)]" />
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-[radial-gradient(ellipse_at_center,_hsl(263_100%_63%_/_0.05)_0%,_transparent_70%)]" />
 
-      {/* Floating orbs */}
-      <div className="absolute top-32 left-16 w-2 h-2 rounded-full bg-primary/60 animate-float" />
-      <div className="absolute top-48 right-24 w-1.5 h-1.5 rounded-full bg-secondary/60 animate-float" style={{ animationDelay: "1s" }} />
-      <div className="absolute bottom-40 left-1/3 w-1 h-1 rounded-full bg-accent/60 animate-float" style={{ animationDelay: "2s" }} />
+      {/* Floating pixel squares */}
+      <div className="absolute top-32 left-16 w-14 h-14 border border-primary/40 rotate-45 animate-float" />
+      <div className="absolute top-48 right-24 w-10 h-10 bg-primary/30 rotate-12 animate-float" style={{ animationDelay: "1s" }} />
+      <div className="absolute bottom-40 left-1/3 w-12 h-12 border-2 border-primary/20 rotate-[30deg] animate-float" style={{ animationDelay: "2s" }} />
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -84,7 +84,7 @@ const Hero: React.FC = () => {
                 <span className="text-shimmer">Solana</span>
               </h1>
               <p className="mt-3 text-xl sm:text-2xl lg:text-3xl font-semibold">
-                <span className="typing-cursor text-gradient-cyan">
+                <span className="typing-cursor text-gradient-purple">
                   {displayText}
                 </span>
               </p>

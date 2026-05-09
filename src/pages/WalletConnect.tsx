@@ -75,7 +75,7 @@ const WalletConnect: React.FC = () => {
     <div className="min-h-screen bg-background flex items-center justify-center relative overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0 bg-grid opacity-30" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-[radial-gradient(ellipse_at_center,_hsl(180_100%_50%_/_0.06)_0%,_transparent_60%)]" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-[radial-gradient(ellipse_at_center,_hsl(263_100%_63.5%_/_0.06)_0%,_transparent_60%)]" />
       <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-[radial-gradient(ellipse_at_center,_hsl(263_100%_63%_/_0.04)_0%,_transparent_60%)]" />
 
       {/* Back button */}
@@ -98,7 +98,7 @@ const WalletConnect: React.FC = () => {
         className="relative z-10 w-full max-w-lg mx-4"
       >
         {/* Glow behind card */}
-        <div className="absolute -inset-1 bg-[radial-gradient(ellipse_at_center,_hsl(180_100%_50%_/_0.1)_0%,_transparent_60%)] rounded-3xl blur-xl" />
+        <div className="absolute -inset-1 bg-[radial-gradient(ellipse_at_center,_hsl(263_100%_63.5%_/_0.1)_0%,_transparent_60%)] rounded-3xl blur-xl" />
 
         <div className="relative glass-card rounded-2xl border border-primary/10 overflow-hidden">
           {/* Neon top line */}
@@ -110,7 +110,7 @@ const WalletConnect: React.FC = () => {
               <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center">
                 <span className="text-primary font-bold text-sm">S</span>
               </div>
-              <span className="text-lg font-bold text-foreground text-glow-cyan">
+              <span className="text-lg font-bold text-foreground text-glow-purple">
                 SolAgent
               </span>
             </div>
@@ -165,7 +165,7 @@ const WalletConnect: React.FC = () => {
 
             {/* Official Wallet Button as fallback */}
             <div className="flex justify-center mb-8">
-              <WalletMultiButton className="!bg-primary !text-black !font-bold !rounded-xl !h-12 !px-8 hover:!bg-primary/90 transition-all shadow-[0_0_20px_-5px_rgba(0,255,255,0.3)]" />
+              <WalletMultiButton className="!bg-primary !text-white !font-bold !rounded-xl !h-12 !px-8 hover:!bg-primary/90 transition-all shadow-[0_0_20px_-5px_rgba(153,69,255,0.3)]" />
             </div>
 
             <div className="relative mb-6">

@@ -22,7 +22,7 @@ const ChatMockup: React.FC = () => {
   return (
     <div className="relative animate-float">
       {/* Glow behind card */}
-      <div className="absolute -inset-4 bg-[radial-gradient(ellipse_at_center,_hsl(180_100%_50%_/_0.08)_0%,_transparent_60%)] rounded-3xl" />
+      <div className="absolute -inset-4 bg-[radial-gradient(ellipse_at_center,_hsl(263_100%_63%_/_0.08)_0%,_transparent_60%)] rounded-3xl" />
 
       <div className="relative glass-card rounded-2xl overflow-hidden border border-border/80 max-w-md mx-auto">
         {/* Header */}

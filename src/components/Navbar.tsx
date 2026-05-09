@@ -52,11 +52,11 @@ const Navbar: React.FC = () => {
           }}
           className="flex items-center gap-2 group"
         >
-          <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center group-hover:border-glow-cyan transition-all duration-300 group-hover:scale-105">
+          <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center group-hover:border-glow-purple transition-all duration-300 group-hover:scale-105">
             <span className="text-primary font-bold text-sm">S</span>
           </div>
           <span className="text-lg font-bold text-foreground">
-            Sol<span className="text-gradient-cyan">Agent</span>
+            Sol<span className="text-gradient-purple">Agent</span>
           </span>
         </a>
 

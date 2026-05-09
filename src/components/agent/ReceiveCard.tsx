@@ -55,7 +55,7 @@ const ReceiveCard: React.FC<ReceiveCardProps> = ({ address, amount }) => {
           </code>
           <CopyToClipboard text={address} onCopy={handleCopy}>
             <button className="text-muted-foreground hover:text-primary transition-colors">
-              {copied ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
+              {copied ? <Check size={14} className="text-primary" /> : <Copy size={14} />}
             </button>
           </CopyToClipboard>
         </div>

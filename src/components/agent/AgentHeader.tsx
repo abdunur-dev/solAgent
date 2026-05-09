@@ -32,7 +32,7 @@ const AgentHeader: React.FC<AgentHeaderProps> = ({ onToggleSidebar }) => {
           <div className="w-7 h-7 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center">
             <span className="text-primary font-bold text-xs">S</span>
           </div>
-          <span className="text-sm font-bold text-foreground text-glow-cyan hidden sm:inline">
+          <span className="text-sm font-bold text-foreground text-glow-purple hidden sm:inline">
             SolAgent
           </span>
         </button>

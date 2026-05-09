@@ -23,7 +23,7 @@ const Footer: React.FC = () => {
                 <span className="text-primary font-bold text-xs">S</span>
               </div>
               <span className="text-base font-bold text-foreground">
-                Sol<span className="text-gradient-cyan">Agent</span>
+                Sol<span className="text-gradient-purple">Agent</span>
               </span>
             </div>
             <p className="text-xs text-muted-foreground font-mono">

@@ -7,8 +7,8 @@ const CTA: React.FC = () => {
   const navigate = useNavigate();
   return (
     <section className="relative py-24 sm:py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-grid-hero opacity-40" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[radial-gradient(ellipse_at_center,_hsl(180_100%_50%_/_0.08)_0%,_transparent_60%)]" />
+      <div className="absolute inset-0 bg-pixel-grid opacity-30" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[radial-gradient(ellipse_at_center,_hsl(263_100%_63%_/_0.08)_0%,_transparent_60%)]" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-[radial-gradient(ellipse_at_center,_hsl(263_100%_63%_/_0.06)_0%,_transparent_60%)]" />
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">

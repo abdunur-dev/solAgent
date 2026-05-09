@@ -70,7 +70,7 @@ const Roadmap: React.FC = () => {
                 transition={{ delay: i * 0.1 }}
                 className={`relative p-8 rounded-2xl border transition-all duration-300 hover-lift ${
                   m.status === "current"
-                    ? "border-primary/40 bg-primary/5 shadow-[0_0_20px_-5px_rgba(0,255,255,0.1)]"
+                    ? "border-primary/40 bg-primary/5 shadow-[0_0_20px_-5px_rgba(153,69,255,0.15)]"
                     : "border-border/60 bg-card/40"
                 }`}
               >
