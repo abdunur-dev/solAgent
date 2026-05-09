@@ -26,6 +26,29 @@ export async function processAgentMessage(
   const { walletAddress, solBalance, tokenBalances, recentTransactions } = context;
   const shortAddr = shortenAddress(walletAddress, 4);
 
+  // --- CONTEXTUAL ADDRESS HANDLING ---
+  const addrMatch = userMessage.match(/[1-9A-HJ-NP-Za-km-z]{32,44}/);
+  if (addrMatch && userMessage.trim() === addrMatch[0]) {
+    const lastAgentMsg = [...context.conversationHistory]
+      .reverse()
+      .find((m) => m.role === "agent");
+
+    if (lastAgentMsg?.content.includes("unstake SOL, please provide the stake account address")) {
+      const stakeAccount = addrMatch[0];
+      return {
+        id: generateId(),
+        role: "agent",
+        content: `Ready to unstake (deactivate) stake account: ${shortenAddress(stakeAccount, 6)}.\n\nDetails:\n  Account: ${stakeAccount}\n  Action: Deactivate\n  Note: After deactivation, you must wait ~2 days (1 epoch) to withdraw the SOL.\n\nReply "confirm" to unstake.`,
+        timestamp: Date.now(),
+        action: {
+          action: "unstake",
+          params: { stakeAccount },
+          requiresConfirmation: true,
+        },
+      };
+    }
+  }
+
   // --- CONFIRMATION RESPONSES ---
   if (lower === "yes" || lower === "confirm" || lower === "y" || lower === "proceed") {
     // Look back for a pending action
