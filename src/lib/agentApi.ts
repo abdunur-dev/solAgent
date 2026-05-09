@@ -157,6 +157,32 @@ export async function processAgentMessage(
     );
   }
 
+  // --- UNSTAKE ---
+  if (lower.includes("unstake")) {
+    const addrMatch = userMessage.match(/[1-9A-HJ-NP-Za-km-z]{32,44}/g);
+    const stakeAccount = addrMatch
+      ? addrMatch.find((a) => a !== walletAddress)
+      : null;
+
+    if (!stakeAccount) {
+      return textResponse(
+        "To unstake SOL, please provide the stake account address. For example: Unstake [stake-account-address]"
+      );
+    }
+
+    return {
+      id: generateId(),
+      role: "agent",
+      content: `Ready to unstake (deactivate) stake account: ${shortenAddress(stakeAccount, 6)}.\n\nDetails:\n  Account: ${stakeAccount}\n  Action: Deactivate\n  Note: After deactivation, you must wait ~2 days (1 epoch) to withdraw the SOL.\n\nReply "confirm" to unstake.`,
+      timestamp: Date.now(),
+      action: {
+        action: "unstake",
+        params: { stakeAccount },
+        requiresConfirmation: true,
+      },
+    };
+  }
+
   // --- STAKE ---
   if (lower.includes("stake")) {
     const stakeMatch = lower.match(/([\d.]+)\s*sol/) || lower.match(/stake\s+([\d.]+)/);
@@ -180,32 +206,6 @@ export async function processAgentMessage(
       action: {
         action: "stake",
         params: { amount, fromToken: "SOL" },
-        requiresConfirmation: true,
-      },
-    };
-  }
-
-  // --- UNSTAKE ---
-  if (lower.includes("unstake")) {
-    const addrMatch = userMessage.match(/[1-9A-HJ-NP-Za-km-z]{32,44}/g);
-    const stakeAccount = addrMatch
-      ? addrMatch.find((a) => a !== walletAddress)
-      : null;
-
-    if (!stakeAccount) {
-      return textResponse(
-        "To unstake SOL, please provide the stake account address. For example: Unstake [stake-account-address]"
-      );
-    }
-
-    return {
-      id: generateId(),
-      role: "agent",
-      content: `Ready to unstake (deactivate) stake account: ${shortenAddress(stakeAccount, 6)}.\n\nDetails:\n  Account: ${stakeAccount}\n  Action: Deactivate\n  Note: After deactivation, you must wait ~2 days (1 epoch) to withdraw the SOL.\n\nReply "confirm" to unstake.`,
-      timestamp: Date.now(),
-      action: {
-        action: "unstake",
-        params: { stakeAccount },
         requiresConfirmation: true,
       },
     };
