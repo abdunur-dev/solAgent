@@ -111,7 +111,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ agent }) => {
         <div
           className={`flex items-center gap-3 px-4 py-3 rounded-2xl border transition-all duration-300 ${
             inputFocused
-              ? "glass-card border-primary/30 border-glow-purple"
+              ? "glass-card border-border/50"
               : "glass-card border-border/50"
           }`}
         >
@@ -132,7 +132,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ agent }) => {
             disabled={!input.trim() || isLoading}
             className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 ${
               input.trim()
-                ? "bg-primary/15 border border-primary/30 text-primary hover:bg-primary/25"
+                ? "bg-primary/10 border border-border/40 text-primary"
                 : "bg-muted/30 border border-border/30 text-muted-foreground"
             }`}
           >

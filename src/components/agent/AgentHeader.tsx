@@ -27,12 +27,10 @@ const AgentHeader: React.FC<AgentHeaderProps> = ({ onToggleSidebar }) => {
         {/* Logo */}
         <button
           onClick={() => navigate("/")}
-          className="flex items-center gap-2 group"
+          className="flex items-center gap-2"
         >
-          <div className="w-7 h-7 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center">
-            <span className="text-primary font-bold text-xs">S</span>
-          </div>
-          <span className="text-sm font-bold text-foreground text-glow-purple hidden sm:inline">
+          <div className="w-7 h-7 bg-solana-purple rounded-lg flex items-center justify-center font-display font-extrabold text-white text-xs">S</div>
+          <span className="text-sm font-bold text-foreground font-display tracking-[0.05em] hidden sm:inline">
             SolAgent
           </span>
         </button>
