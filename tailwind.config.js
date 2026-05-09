@@ -19,8 +19,12 @@ export default {
       fontFamily: {
         sans: ['"Space Grotesk"', "system-ui", "sans-serif"],
         mono: ['"JetBrains Mono"', "monospace"],
+        display: ['Syne', 'sans-serif'],
+        body: ['DM Sans', 'sans-serif'],
       },
       colors: {
+        orange: { DEFAULT: '#FF5500', light: '#FF6B00', dark: '#E04A00' },
+        dark: { DEFAULT: '#0D0D0D', 1: '#111111', 2: '#161616', 3: '#1C1C1C', 4: '#242424' },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -69,6 +73,11 @@ export default {
           purple: "hsl(263 100% 63%)",
           pink: "hsl(300 100% 50%)",
         },
+        solana: {
+          cyan: '#00FFA3',
+          purple: '#9945FF',
+          dark: '#0d0d0d',
+        }
       },
       borderRadius: {
         lg: "var(--radius)",
