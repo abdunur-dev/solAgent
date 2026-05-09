@@ -1,0 +1,308 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 4%;
+    --foreground: 0 0% 100%;
+
+    --card: 0 0% 6%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 0 0% 6%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 180 100% 50%;
+    --primary-foreground: 0 0% 0%;
+
+    --secondary: 263 100% 63%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 53%;
+
+    --accent: 300 100% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 0 0% 14%;
+    --input: 0 0% 14%;
+    --ring: 180 100% 50%;
+
+    --radius: 0.75rem;
+
+    /* Neon glow tokens */
+    --glow-cyan: 0 0 20px hsl(180 100% 50% / 0.5), 0 0 60px hsl(180 100% 50% / 0.2);
+    --glow-cyan-intense: 0 0 20px hsl(180 100% 50% / 0.6), 0 0 80px hsl(180 100% 50% / 0.3), 0 0 120px hsl(180 100% 50% / 0.1);
+    --glow-purple: 0 0 20px hsl(263 100% 63% / 0.5), 0 0 60px hsl(263 100% 63% / 0.2);
+    --glow-pink: 0 0 20px hsl(300 100% 50% / 0.5), 0 0 60px hsl(300 100% 50% / 0.2);
+
+    /* Gradient tokens */
+    --gradient-neon: linear-gradient(135deg, hsl(180 100% 50%) 0%, hsl(263 100% 63%) 100%);
+    --gradient-neon-reverse: linear-gradient(135deg, hsl(263 100% 63%) 0%, hsl(180 100% 50%) 100%);
+    --gradient-dark: linear-gradient(180deg, hsl(0 0% 4%) 0%, hsl(0 0% 7%) 100%);
+    --gradient-glass: linear-gradient(135deg, hsl(0 0% 100% / 0.05) 0%, hsl(0 0% 100% / 0.02) 100%);
+
+    /* Sidebar (unused but required by shadcn) */
+    --sidebar-background: 0 0% 6%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 180 100% 50%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 0 0% 10%;
+    --sidebar-accent-foreground: 0 0% 90%;
+    --sidebar-border: 0 0% 14%;
+    --sidebar-ring: 180 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: hsl(var(--primary) / 0.3);
+    color: hsl(var(--foreground));
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary) / 0.3);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.5);
+  }
+}
+
+@layer utilities {
+  /* Neon text glow */
+  .text-glow-cyan {
+    text-shadow: 0 0 10px hsl(180 100% 50% / 0.6), 0 0 40px hsl(180 100% 50% / 0.3), 0 0 80px hsl(180 100% 50% / 0.1);
+  }
+
+  .text-glow-purple {
+    text-shadow: 0 0 10px hsl(263 100% 63% / 0.6), 0 0 40px hsl(263 100% 63% / 0.3);
+  }
+
+  /* Neon border glow */
+  .border-glow-cyan {
+    box-shadow: var(--glow-cyan);
+  }
+
+  .border-glow-cyan-intense {
+    box-shadow: var(--glow-cyan-intense);
+  }
+
+  .border-glow-purple {
+    box-shadow: var(--glow-purple);
+  }
+
+  /* Glass card */
+  .glass-card {
+    background: linear-gradient(135deg, hsl(0 0% 100% / 0.04) 0%, hsl(0 0% 100% / 0.01) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid hsl(0 0% 100% / 0.06);
+  }
+
+  .glass-card-hover {
+    background: linear-gradient(135deg, hsl(0 0% 100% / 0.04) 0%, hsl(0 0% 100% / 0.01) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid hsl(0 0% 100% / 0.06);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .glass-card-hover:hover {
+    border-color: hsl(180 100% 50% / 0.3);
+    box-shadow: 0 0 30px hsl(180 100% 50% / 0.1), inset 0 0 30px hsl(180 100% 50% / 0.03);
+    background: linear-gradient(135deg, hsl(0 0% 100% / 0.06) 0%, hsl(0 0% 100% / 0.02) 100%);
+  }
+
+  /* Grid background pattern */
+  .bg-grid {
+    background-image:
+      linear-gradient(hsl(0 0% 100% / 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(0 0% 100% / 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .bg-grid-hero {
+    background-image:
+      linear-gradient(hsl(180 100% 50% / 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(180 100% 50% / 0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* Neon button styles */
+  .btn-neon-primary {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    font-weight: 600;
+    padding: 0.75rem 2rem;
+    border-radius: var(--radius);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 20px hsl(180 100% 50% / 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-neon-primary:hover {
+    box-shadow: 0 0 30px hsl(180 100% 50% / 0.5), 0 0 60px hsl(180 100% 50% / 0.2);
+    transform: translateY(-1px);
+  }
+
+  .btn-neon-ghost {
+    background: transparent;
+    color: hsl(var(--primary));
+    font-weight: 600;
+    padding: 0.75rem 2rem;
+    border-radius: var(--radius);
+    border: 1px solid hsl(var(--primary) / 0.5);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-neon-ghost:hover {
+    border-color: hsl(var(--primary));
+    box-shadow: 0 0 20px hsl(180 100% 50% / 0.2);
+    background: hsl(var(--primary) / 0.05);
+  }
+
+  /* Neon pulse animation */
+  .neon-pulse {
+    animation: neonPulse 2s ease-in-out infinite;
+  }
+
+  /* Neon line */
+  .neon-line {
+    height: 2px;
+    background: linear-gradient(90deg, hsl(180 100% 50%), hsl(263 100% 63%), hsl(180 100% 50%));
+    box-shadow: 0 0 10px hsl(180 100% 50% / 0.5);
+  }
+}
+
+/* Keyframe animations */
+@keyframes neonPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px hsl(180 100% 50% / 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px hsl(180 100% 50% / 0.5), 0 0 60px hsl(180 100% 50% / 0.2);
+  }
+}
+
+@keyframes gridMove {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(60px, 60px);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes textShimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.animate-grid-move {
+  animation: gridMove 8s linear infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.text-shimmer {
+  background: linear-gradient(
+    90deg,
+    hsl(180 100% 50%) 0%,
+    hsl(0 0% 100%) 25%,
+    hsl(263 100% 63%) 50%,
+    hsl(0 0% 100%) 75%,
+    hsl(180 100% 50%) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textShimmer 4s linear infinite;
+}
+
+/* Wallet button override */
+.wallet-adapter-button {
+  background-color: hsl(180 100% 50%) !important;
+  color: hsl(0 0% 0%) !important;
+  font-family: 'Space Grotesk', system-ui, sans-serif !important;
+  font-weight: 600 !important;
+  border-radius: var(--radius) !important;
+  box-shadow: 0 0 20px hsl(180 100% 50% / 0.3) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  padding: 0 1.5rem !important;
+  height: 44px !important;
+}
+
+.wallet-adapter-button:hover {
+  box-shadow: 0 0 30px hsl(180 100% 50% / 0.5), 0 0 60px hsl(180 100% 50% / 0.2) !important;
+  background-color: hsl(180 100% 55%) !important;
+}
+
+.wallet-adapter-dropdown {
+  z-index: 100 !important;
+}
+
+.wallet-adapter-modal-wrapper {
+  background-color: hsl(0 0% 6%) !important;
+  border: 1px solid hsl(0 0% 100% / 0.1) !important;
+  font-family: 'Space Grotesk', system-ui, sans-serif !important;
+}
+
+.wallet-adapter-modal-title {
+  color: hsl(0 0% 100%) !important;
+  font-family: 'Space Grotesk', system-ui, sans-serif !important;
+}
+
+.wallet-adapter-modal-list .wallet-adapter-button {
+  background-color: hsl(0 0% 10%) !important;
+  color: hsl(0 0% 100%) !important;
+  box-shadow: none !important;
+}
+
+.wallet-adapter-modal-list .wallet-adapter-button:hover {
+  background-color: hsl(0 0% 14%) !important;
+  box-shadow: none !important;
+}
