@@ -254,9 +254,17 @@ export async function processAgentMessage(
 
   // --- RECEIVE ---
   if (lower.includes("receive") || lower.includes("deposit") || lower.includes("my address") || lower.includes("show address")) {
-    return textResponse(
-      `Your public wallet address is:\n\n\`${walletAddress}\`\n\nYou can use this address to receive SOL and other tokens on the Solana Devnet.`
-    );
+    return {
+      id: generateId(),
+      role: "agent",
+      content: `Your public wallet address is ready for deposits.\n\nYou can use this address to receive SOL and other SPL tokens on the Solana Devnet.`,
+      timestamp: Date.now(),
+      action: {
+        action: "receive",
+        params: { recipient: walletAddress },
+        requiresConfirmation: false,
+      },
+    };
   }
 
   // --- HELP / GENERAL ---

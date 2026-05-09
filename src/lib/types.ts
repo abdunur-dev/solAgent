@@ -2,6 +2,7 @@ export type ActionType =
   | "send"
   | "swap"
   | "stake"
+  | "receive"
   | "airdrop"
   | "predict"
   | "balance"

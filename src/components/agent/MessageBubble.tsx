@@ -11,6 +11,7 @@ import {
 import { getSolscanUrl } from "@/lib/solana";
 import type { ChatMessage } from "@/lib/types";
 import ConfirmCard from "./ConfirmCard";
+import ReceiveCard from "./ReceiveCard";
 
 interface MessageBubbleProps {
   message: ChatMessage;
@@ -130,6 +131,11 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
             onCancel={onCancel}
             disabled={isProcessing}
           />
+        )}
+
+        {/* Receive card below the bubble */}
+        {message.action?.action === "receive" && message.action.params.recipient && (
+          <ReceiveCard address={message.action.params.recipient} />
         )}
       </div>
     </motion.div>
