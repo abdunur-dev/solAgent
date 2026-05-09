@@ -47,16 +47,6 @@ export function useAgent(walletData: WalletDataReturn) {
     };
   }, [address]);
 
-  /** Persist messages to localStorage whenever they change */
-  const persistMessages = useCallback(
-    (msgs: ChatMessage[]) => {
-      if (!address) return;
-      const stored: StoredMessage[] = msgs.map(toStored);
-      saveMessages(address, stored);
-    },
-    [address]
-  );
-
   /** Execute a real SOL transfer on-chain */
   const executeTransfer = useCallback(
     async (
