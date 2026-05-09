@@ -31,7 +31,9 @@ const Footer: React.FC = () => {
           {/* Social links */}
           <div className="flex items-center gap-4">
             <a
-              href="#"
+              href="https://github.com/abdunur-dev/solAgent"
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-9 h-9 rounded-lg glass-card flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/30 transition-all duration-300"
               aria-label="GitHub"
             >
