@@ -274,7 +274,7 @@ export function useAgent(walletData: WalletDataReturn) {
             );
 
             if ("signature" in result) {
-              agentResponse.content = `Swap confirmed on-chain.\n\nSignature: ${result.signature.slice(0, 16)}...\n\nView on Solscan for full details.`;
+              agentResponse.content = `Swap simulation confirmed on-chain via Memo.\n\nSignature: ${result.signature.slice(0, 16)}...\n\nNote: On Devnet, balances are not actually exchanged, but the transaction is verified and recorded.`;
               agentResponse.txSignature = result.signature;
               agentResponse.status = "confirmed";
 

@@ -142,7 +142,7 @@ export async function processAgentMessage(
       return {
         id: generateId(),
         role: "agent",
-        content: `Swap quote found via Jupiter aggregator.\n\nDetails:\n  Sell: ${amount} ${fromToken}\n  Buy: ~${estimated} ${toToken}\n  Rate: 1 ${fromToken} = ${mockRate} ${toToken}\n  Slippage: 0.5%\n  Route: ${fromToken} > ${toToken} (Jupiter)\n\nReply "confirm" to execute this swap.`,
+        content: `I've prepared a **Simulated Swap** for you on Devnet.\n\nDetails:\n  Sell: ${amount} ${fromToken}\n  Buy: ~${estimated} ${toToken}\n  Rate: 1 ${fromToken} = ${mockRate} ${toToken}\n  Route: Jupiter Aggregator (Mock)\n\n**Note:** Because we are on Devnet, this is an on-chain simulation. Your real balance won't change, but the swap will be permanently recorded via a Memo.\n\nReply "confirm" to execute.`,
         timestamp: Date.now(),
         action: {
           action: "swap",
