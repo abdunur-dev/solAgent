@@ -48,6 +48,13 @@ const features = [
     color: "primary" as const,
   },
   {
+    icon: Send,
+    title: "Instant Transfers",
+    description:
+      "Send SOL or any SPL token to any address instantly. Just say 'Send 1 SOL to...'",
+    color: "accent" as const,
+  },
+  {
     icon: Wallet,
     title: "Asset Management",
     description:
