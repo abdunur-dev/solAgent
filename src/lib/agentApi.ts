@@ -252,16 +252,21 @@ export async function processAgentMessage(
     );
   }
 
-  // --- RECEIVE ---
-  if (lower.includes("receive") || lower.includes("deposit") || lower.includes("my address") || lower.includes("show address")) {
+  // --- RECEIVE / PAYMENT REQUEST ---
+  if (lower.includes("receive") || lower.includes("deposit") || lower.includes("my address") || lower.includes("show address") || lower.includes("request")) {
+    const amountMatch = lower.match(/([\d.]+)\s*sol/) || lower.match(/request\s+([\d.]+)/);
+    const amount = amountMatch ? parseFloat(amountMatch[1]) : undefined;
+
     return {
       id: generateId(),
       role: "agent",
-      content: `Your public wallet address is ready for deposits.\n\nYou can use this address to receive SOL and other SPL tokens on the Solana Devnet.`,
+      content: amount 
+        ? `I've generated a payment request for ${amount} SOL.\n\nShare the QR code below with the sender. It is encoded with your address and the requested amount using Solana Pay.`
+        : `Your public wallet address is ready for deposits.\n\nYou can use this address to receive SOL and other SPL tokens on the Solana Devnet.`,
       timestamp: Date.now(),
       action: {
         action: "receive",
-        params: { recipient: walletAddress },
+        params: { recipient: walletAddress, amount },
         requiresConfirmation: false,
       },
     };

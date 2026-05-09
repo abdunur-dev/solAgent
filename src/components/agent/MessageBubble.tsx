@@ -135,7 +135,10 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
 
         {/* Receive card below the bubble */}
         {message.action?.action === "receive" && message.action.params.recipient && (
-          <ReceiveCard address={message.action.params.recipient} />
+          <ReceiveCard 
+            address={message.action.params.recipient} 
+            amount={message.action.params.amount}
+          />
         )}
       </div>
     </motion.div>

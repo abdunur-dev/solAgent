@@ -6,7 +6,9 @@ import {
   ArrowLeftRight,
   Send,
   ShieldCheck,
-  PieChart,
+  QrCode,
+  Zap,
+  Landmark,
 } from "lucide-react";
 
 const features = [
@@ -18,38 +20,38 @@ const features = [
     color: "primary" as const,
   },
   {
-    icon: Wallet,
-    title: "Multi-Wallet Support",
+    icon: ArrowLeftRight,
+    title: "On-Chain Swaps",
     description:
-      "Works with every Solana wallet — Phantom, Backpack, Solflare, Ledger and more.",
+      "Execute token swaps via Jupiter Aggregator just by typing 'Swap 5 SOL to USDC'.",
     color: "secondary" as const,
   },
   {
-    icon: ArrowLeftRight,
-    title: "Instant Swaps",
+    icon: Landmark,
+    title: "Secure Staking",
     description:
-      "Swap any token on Solana DEXs with a single sentence.",
+      "Stake your SOL with top validators and start earning rewards with simple commands.",
     color: "primary" as const,
   },
   {
-    icon: Send,
-    title: "Easy Transfers",
+    icon: QrCode,
+    title: "Payment Requests",
     description:
-      "Send SOL or any SPL token just by typing who to send it to.",
+      "Generate Solana Pay compatible QR codes for specific amounts with 'Request 1 SOL'.",
     color: "accent" as const,
   },
   {
-    icon: ShieldCheck,
-    title: "Non-Custodial",
+    icon: Zap,
+    title: "Prediction Markets",
     description:
-      "Your keys, your crypto. SolAgent never holds or stores your funds.",
+      "Place on-chain predictions on real-world events and crypto prices instantly.",
     color: "primary" as const,
   },
   {
-    icon: PieChart,
-    title: "Portfolio Insights",
+    icon: Wallet,
+    title: "Asset Management",
     description:
-      "Ask about your balance, tokens, NFTs and transaction history anytime.",
+      "Check balances, request Devnet airdrops, and view your NFT collection in one place.",
     color: "secondary" as const,
   },
 ];

@@ -5,9 +5,10 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 
 interface ReceiveCardProps {
   address: string;
+  amount?: number;
 }
 
-const ReceiveCard: React.FC<ReceiveCardProps> = ({ address }) => {
+const ReceiveCard: React.FC<ReceiveCardProps> = ({ address, amount }) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -15,7 +16,11 @@ const ReceiveCard: React.FC<ReceiveCardProps> = ({ address }) => {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${address}&bgcolor=0a0a0a&color=ffffff`;
+  const solanaPayUri = amount 
+    ? `solana:${address}?amount=${amount}`
+    : address;
+
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(solanaPayUri)}&bgcolor=0a0a0a&color=ffffff`;
 
   return (
     <motion.div
@@ -26,7 +31,9 @@ const ReceiveCard: React.FC<ReceiveCardProps> = ({ address }) => {
     >
       <div className="flex items-center gap-2 self-start mb-2">
         <QrCode size={18} className="text-primary" />
-        <span className="text-sm font-semibold text-foreground">Receive Assets</span>
+        <span className="text-sm font-semibold text-foreground">
+          {amount ? `Payment Request: ${amount} SOL` : "Receive Assets"}
+        </span>
       </div>
 
       <div className="relative group p-4 bg-white rounded-lg">
