@@ -16,7 +16,7 @@ const milestones = [
     title: "Alpha Release",
     date: "Q2 2026",
     status: "current",
-    items: ["Staking & Swaps", "Payment Requests", "UI Overhaul"],
+    items: ["Staking & Swaps", "Payment Requests", "LI.FI Cross-Chain Integration"],
     icon: Rocket,
   },
   {
@@ -24,7 +24,7 @@ const milestones = [
     title: "Mainnet Launch",
     date: "Q3 2026",
     status: "upcoming",
-    items: ["Mainnet Liquidity", "Advanced Risk Analysis", "Referral Program"],
+    items: ["Mainnet Liquidity", "Advanced Risk Analysis", "Multi-Chain Expansion"],
     icon: Globe,
   },
   {

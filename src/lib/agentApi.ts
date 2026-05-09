@@ -135,6 +135,31 @@ export async function processAgentMessage(
     );
   }
 
+  // --- BRIDGE / CROSS-CHAIN ---
+  if (lower.includes("bridge") || lower.includes("cross-chain")) {
+    const bridgeMatch = lower.match(/bridge\s+([\d.]+)\s*(\w+)\s*(?:to|into)?\s*(\w+)/) || lower.match(/transfer\s+([\d.]+)\s*(\w+)\s*to\s*(\w+)/);
+    
+    if (bridgeMatch) {
+      const amount = parseFloat(bridgeMatch[1]);
+      const fromToken = bridgeMatch[2].toUpperCase();
+      const toChain = bridgeMatch[3].charAt(0).toUpperCase() + bridgeMatch[3].slice(1).toLowerCase();
+
+      return {
+        id: generateId(),
+        role: "agent",
+        content: `I've prepared a cross-chain bridge route via **LI.FI**.\n\nDetails:\n  From: ${amount} ${fromToken} (Solana)\n  To: ${toChain} Network\n  Aggregator: LI.FI (60+ Chains Supported)\n  Est. Time: 5-10 minutes\n\n**Note:** This is a simulated cross-chain route for Devnet. In a live environment, LI.FI would find the cheapest and fastest bridge (Stargate, Across, etc.) for you.\n\nReply "confirm" to simulate this bridge.`,
+        timestamp: Date.now(),
+        action: {
+          action: "swap", 
+          params: { amount, fromToken, toToken: `to ${toChain}` },
+          requiresConfirmation: true,
+        },
+      };
+    }
+
+    return textResponse("Where would you like to bridge your assets? For example: Bridge 1 SOL to Ethereum");
+  }
+
   // --- STAKE ---
   if (lower.includes("stake")) {
     const stakeMatch = lower.match(/([\d.]+)\s*sol/) || lower.match(/stake\s+([\d.]+)/);

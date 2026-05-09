@@ -9,6 +9,7 @@ import {
   QrCode,
   Zap,
   Landmark,
+  Globe,
 } from "lucide-react";
 
 const features = [
@@ -20,10 +21,17 @@ const features = [
     color: "primary" as const,
   },
   {
+    icon: Globe,
+    title: "Cross-Chain Bridging",
+    description:
+      "Bridge assets across 60+ chains (Ethereum, Base, etc.) using LI.FI's powerful aggregation.",
+    color: "primary" as const,
+  },
+  {
     icon: ArrowLeftRight,
     title: "On-Chain Swaps",
     description:
-      "Execute token swaps via Jupiter Aggregator just by typing 'Swap 5 SOL to USDC'.",
+      "Execute token swaps via LI.FI & Jupiter Aggregator just by typing 'Swap 5 SOL to USDC'.",
     color: "secondary" as const,
   },
   {
