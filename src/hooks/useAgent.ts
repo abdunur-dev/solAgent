@@ -9,7 +9,7 @@ import {
   toStored,
 } from "@/lib/memory";
 import { processAgentMessage } from "@/lib/agentApi";
-import { buildTransferTransaction, buildSwapTransaction, buildStakeTransaction, buildPredictionTransaction, requestDevnetAirdrop, isValidPublicKey } from "@/lib/solana";
+import { buildTransferTransaction, buildSwapTransaction, buildStakeTransaction, buildUnstakeTransaction, buildPredictionTransaction, requestDevnetAirdrop, isValidPublicKey } from "@/lib/solana";
 import type { useWalletData } from "@/hooks/useWalletData";
 
 const generateId = () => Math.random().toString(36).substring(2, 12);
@@ -169,6 +169,38 @@ export function useAgent(walletData: WalletDataReturn) {
     [publicKey, sendTransaction, connection, address]
   );
 
+  /** Execute a real unstake (deactivate) transaction on-chain */
+  const executeUnstake = useCallback(
+    async (
+      stakeAccount: string
+    ): Promise<{ signature: string } | { error: string }> => {
+      if (!publicKey || !sendTransaction) {
+        return { error: "Wallet not connected" };
+      }
+
+      try {
+        const tx = await buildUnstakeTransaction(
+          address,
+          stakeAccount
+        );
+        const signature = await sendTransaction(tx, connection);
+
+        // Wait for confirmation
+        await connection.confirmTransaction(signature, "confirmed");
+
+        return { signature };
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : "Unstake transaction failed";
+
+        if (msg.includes("User rejected")) {
+          return { error: "Transaction rejected by wallet." };
+        }
+        return { error: msg };
+      }
+    },
+    [publicKey, sendTransaction, connection, address]
+  );
+
   /** Execute a mock prediction transaction on-chain */
   const executePrediction = useCallback(
     async (
@@ -293,6 +325,20 @@ export function useAgent(walletData: WalletDataReturn) {
               agentResponse.content = `Swap failed: ${result.error}`;
               agentResponse.status = "error";
             }
+          } else if (actionParams.stakeAccount) {
+            // It's an Unstake Action
+            const result = await executeUnstake(actionParams.stakeAccount);
+
+            if ("signature" in result) {
+              agentResponse.content = `Unstake confirmed on-chain. Stake account is now deactivating.\n\nSignature: ${result.signature.slice(0, 16)}...\n\nView on Solscan for full details.`;
+              agentResponse.txSignature = result.signature;
+              agentResponse.status = "confirmed";
+
+              walletData.refresh();
+            } else {
+              agentResponse.content = `Unstake failed: ${result.error}`;
+              agentResponse.status = "error";
+            }
           } else if (actionParams.fromToken === "SOL" && actionParams.amount) {
             // It's a Stake Action
             const result = await executeStake(actionParams.amount);
@@ -357,7 +403,7 @@ export function useAgent(walletData: WalletDataReturn) {
         setIsLoading(false);
       }
     },
-    [messages, isLoading, address, walletData, executeTransfer, executeSwap, executeStake, executePrediction, executeAirdrop]
+    [messages, isLoading, address, walletData, executeTransfer, executeSwap, executeStake, executeUnstake, executePrediction, executeAirdrop]
   );
 
   /** Clear all chat history */

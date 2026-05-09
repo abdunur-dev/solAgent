@@ -185,6 +185,32 @@ export async function processAgentMessage(
     };
   }
 
+  // --- UNSTAKE ---
+  if (lower.includes("unstake")) {
+    const addrMatch = userMessage.match(/[1-9A-HJ-NP-Za-km-z]{32,44}/g);
+    const stakeAccount = addrMatch
+      ? addrMatch.find((a) => a !== walletAddress)
+      : null;
+
+    if (!stakeAccount) {
+      return textResponse(
+        "To unstake SOL, please provide the stake account address. For example: Unstake [stake-account-address]"
+      );
+    }
+
+    return {
+      id: generateId(),
+      role: "agent",
+      content: `Ready to unstake (deactivate) stake account: ${shortenAddress(stakeAccount, 6)}.\n\nDetails:\n  Account: ${stakeAccount}\n  Action: Deactivate\n  Note: After deactivation, you must wait ~2 days (1 epoch) to withdraw the SOL.\n\nReply "confirm" to unstake.`,
+      timestamp: Date.now(),
+      action: {
+        action: "unstake",
+        params: { stakeAccount },
+        requiresConfirmation: true,
+      },
+    };
+  }
+
   // --- PREDICT ---
   if (lower.includes("predict") || lower.includes("bet")) {
     const amountMatch = lower.match(/([\d.]+)\s*sol/) || lower.match(/(?:predict|bet)\s+([\d.]+)/);
@@ -308,6 +334,16 @@ function createConfirmExecution(
         content: `Executing stake of ${params.amount} SOL with validator...\n\nTransaction submitted. Your wallet will prompt you to sign.`,
         timestamp: Date.now(),
         action: { action: "confirm", params: { ...params, fromToken: "SOL" }, requiresConfirmation: false },
+        status: "pending",
+      };
+
+    case "unstake":
+      return {
+        id: generateId(),
+        role: "agent",
+        content: `Deactivating stake account ${shortenAddress(params.stakeAccount ?? "", 6)}...\n\nTransaction submitted. Your wallet will prompt you to sign.`,
+        timestamp: Date.now(),
+        action: { action: "confirm", params, requiresConfirmation: false },
         status: "pending",
       };
 

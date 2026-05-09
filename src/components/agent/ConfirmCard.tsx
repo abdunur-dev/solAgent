@@ -30,6 +30,8 @@ const ConfirmCard: React.FC<ConfirmCardProps> = ({
         return "Confirm Airdrop";
       case "predict":
         return "Confirm Prediction";
+      case "unstake":
+        return "Confirm Unstaking";
       default:
         return "Confirm Action";
     }
@@ -71,6 +73,17 @@ const ConfirmCard: React.FC<ConfirmCardProps> = ({
           { label: "Amount", value: `${params.amount ?? 0} SOL` },
           { label: "Event", value: params.predictionEvent ?? "Unknown" },
           { label: "Network", value: "Devnet" },
+        ];
+      case "unstake":
+        return [
+          { label: "Action", value: "Deactivate Stake" },
+          {
+            label: "Account",
+            value: params.stakeAccount
+              ? `${params.stakeAccount.slice(0, 6)}...${params.stakeAccount.slice(-6)}`
+              : "Unknown",
+          },
+          { label: "Cooldown", value: "~2 days" },
         ];
       default:
         return [];
