@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useWallet } from "@solana/wallet-adapter-react";
 import type { WalletName } from "@solana/wallet-adapter-base";
 import { WalletReadyState } from "@solana/wallet-adapter-base";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Loader2,
@@ -161,6 +162,20 @@ const WalletConnect: React.FC = () => {
                 </motion.div>
               )}
             </AnimatePresence>
+
+            {/* Official Wallet Button as fallback */}
+            <div className="flex justify-center mb-8">
+              <WalletMultiButton className="!bg-primary !text-black !font-bold !rounded-xl !h-12 !px-8 hover:!bg-primary/90 transition-all shadow-[0_0_20px_-5px_rgba(0,255,255,0.3)]" />
+            </div>
+
+            <div className="relative mb-6">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-border/30"></div>
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">Or select manually</span>
+              </div>
+            </div>
 
             {/* Wallet grid */}
             {!connected && (
